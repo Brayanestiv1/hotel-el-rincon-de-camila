@@ -1,21 +1,21 @@
 {
   "users": [
     {
-      "id": 1,
-      "username": "nombreUsuario",
-      "password": "contraseña",
-      "email": "correo"
+      "name": "brayan",
+      "email": "cuentaestudio@gmail.com",
+      "password": "oigres153246",
+      "id": 1
     },
     {
-      "id": 2,
-      "username": "juan12",
-      "password": "mypassword",
-      "email": "juan123@example.com"
+      "name": "felice",
+      "email": "verabrayandavid@gmail.com",
+      "password": "oigres153246",
+      "id": 2
     },
     {
-      "username": "juan12",
-      "password": "mypassword",
-      "email": "juan123@example.com",
+      "name": "juan",
+      "email": "coreo@gmail.com",
+      "password": "password",
       "id": 3
     }
   ],

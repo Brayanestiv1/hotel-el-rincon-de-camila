@@ -46,6 +46,8 @@ function App () {}
 
   //----------Modar de registro----------// 
 
+  //registrarse
+
    // Get elements
    const openModalOption = document.getElementById('openModal');
    const closeModalButton = document.getElementById('closeModal');
@@ -70,18 +72,42 @@ function App () {}
    });
 
    // Handle form submission
-   registrationForm.addEventListener('submit', (e) => {
+   registrationForm.addEventListener('submit', async (e) => {
        e.preventDefault(); // Prevent default form submission
 
        const name = document.getElementById('name').value;
        const email = document.getElementById('email').value;
+       const password = document.getElementById('password').value;
 
        // Validate and process data (this is a simple example)
-       if (name && email) {
-           alert(`Registro exitoso:\nNombre: ${name}\nEmail: ${email}`);
-           modalOverlay.style.display = 'none'; // Close the modal
-           registrationForm.reset(); // Clear the form
-       } else {
-           alert('Por favor, completa todos los campos.');
-       }
-   });
+       if (name && email && password) {
+        try {
+            // Realiza la petición POST con fetch
+            const response = await fetch('http://localhost:3000/users', { // Cambia la URL por la de tu API
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            // Maneja la respuesta
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Registro exitoso: ${result.message || 'Datos guardados correctamente.'}`);
+                modalOverlay.style.display = 'none'; // Cierra el modal
+                registrationForm.reset(); // Limpia el formulario
+            } else {
+                const error = await response.json();
+                alert(`Error en el registro: ${error.message || 'Intenta nuevamente.'}`);
+            }
+        } catch (error) {
+            console.error('Error al conectar con la API:', error);
+            alert('Hubo un problema al guardar los datos. Verifica tu conexión.');
+        }
+    } else {
+        alert('Por favor, completa todos los campos.');
+    }
+          });
+
+
