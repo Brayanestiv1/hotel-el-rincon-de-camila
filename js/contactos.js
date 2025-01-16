@@ -291,84 +291,18 @@ profileModalOverlay.addEventListener('click', (e) => {
 });
 
 
-// Guardar el usuario en el localStorage al iniciar sesión
-function iniciarSesion(usuario) {
-  localStorage.setItem('usuario', JSON.stringify(usuario));
-}
 
-// Verificar si el usuario está conectado (al cargar la página)
-function verificarSesion() {
-  const usuario = JSON.parse(localStorage.getItem('usuario'));
-  if (usuario) {
-      mostrarUsuario(usuario);
-  } else {
-      // Mostrar formulario de inicio de sesión o redirigir
-      mostrarFormularioInicioSesion();
+// Mostrar el usuario conectado (en cualquier página)
+function mostrarUsuario(usuario) {
+    const usuarioElement = document.getElementById('usuario');
+    usuarioElement.textContent = `Bienvenido, ${usuario.nombre}`;
   }
-}
-
-
-
-/*------------------------filtro cabañas----------------------------- */
-
-
-document.getElementById("reservationForm").addEventListener("submit", async function (e) {
-  e.preventDefault(); // Prevenir recarga de la página
-
-  // Obtener los valores del formulario
-  const checkIn = document.getElementById("check-in").value;
-  const checkOut = document.getElementById("check-out").value;
-  const people = document.getElementById("people").value;
-  const services = document.getElementById("services").value;
-
-  try {
-    // Hacer la solicitud HTTP GET al API
-    const response = await fetch("http://localhost:3000/cabanas"); // Cambiar por la URL real
-    const data = await response.json();
-
-    // Filtrar las cabañas según los criterios del cliente
-    const filteredCabanas = data.cabanas.filter((cabana) => {
-      // Verificar disponibilidad (fecha en null y disponible en true)
-      if (cabana.fecha !== null || !cabana.disponible) return false;
-
-      // Filtrar por el número de personas
-      if (cabana.personas < people) return false;
-
-      // Filtrar por servicios seleccionados (si no es "Ninguno")
-      if (services !== "none" && !cabana.extras.includes(services)) return false;
-
-      return true;
-    });
-
-    // Mostrar los resultados
-    displayResults(filteredCabanas, checkIn, checkOut);
-  } catch (error) {
-    console.error("Error al obtener las cabañas:", error);
+  
+  // Llamar a la función verificarSesion() cuando se carga la página
+  window.onload = verificarSesion;
+  
+  // Si el usuario cierra sesión
+  function cerrarSesion() {
+    localStorage.removeItem('usuario');
+    mostrarFormularioInicioSesion();  // Muestra el formulario de inicio de sesión nuevamente
   }
-});
-
-// Función para mostrar los resultados en la página
-function displayResults(cabanas, checkIn, checkOut) {
-  const resultsContainer = document.querySelector(".results .cabanas-list");
-  resultsContainer.innerHTML = ""; // Limpiar resultados previos
-
-  if (cabanas.length === 0) {
-    resultsContainer.innerHTML = "<p>No se encontraron cabañas disponibles.</p>";
-    return;
-  }
-
-  cabanas.forEach((cabana) => {
-    const cabanaItem = document.createElement("li");
-    cabanaItem.classList.add("cabana-item");
-
-    cabanaItem.innerHTML = `
-      <h3>Cabaña ${cabana.id}</h3>
-      <p>Precio: $${cabana.precio}</p>
-      <p>Personas: ${cabana.personas}</p>
-      <p>Extras: ${cabana.extras.join(", ") || "Ninguno"}</p>
-      <p><strong>Disponible para las fechas: ${checkIn} - ${checkOut}</strong></p>
-    `;
-
-    resultsContainer.appendChild(cabanaItem);
-  });
-}

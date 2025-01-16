@@ -3,10 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>reservas</title>
-    <link rel="stylesheet" href="/css/reservas.css">
+    <link rel="icon" href="/img/logo.ico" type="image/x-icon" />
+    <title>reservaciones</title>
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-    
+    <header>
+        <nav>
+          <a href="#">
+            <img class="logo" src="/img/logo.jpg.png" alt="logo" />
+          </a>
+          <ul class="enlaces-menu" id="menu">
+            <li><a href="/index.html">inicio</a></li>
+            <li><a href="reservas.htm">reservaciones</a></li>
+            <li><a href="contactos.html">contactos</a></li>
+            <li id="login-button"><a href="#">Login</a></li>
+            <li id="openModal"><a href="#">registro</a></li>
+            <li id="user-name" class="ocultar"></li>
+          </ul>
+          <button class="ham" id="menu-btn" type="button">
+            <span class="br-1"></span>
+            <span class="br-2"></span>
+            <span class="br-3"></span>
+          </button>
+        </nav>
+      </header>
+
+       <!-- Modal registrar -->
+     <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+          <button class="modal-close" id="closeModal">&times;</button>
+          <h2>Registro</h2>
+          <form id="registrationForm">
+              <input type="text" id="name" placeholder="Nombre" required>
+              <input type="email" id="email" placeholder="Correo Electrónico" required>
+              <input type="password" id="password" placeholder="password" required>
+              <button class="modal-register" type="submit">Registrar</button>
+              <li id="user-name" class="ocultar"></li>
+          </form>
+      </div>
+    </div>
+
+      <!-- Modal de Login -->
+    <div class="modal-overlay" id="loginModalOverlay">
+      <div class="modal">
+          <button class="modal-close" id="closeLoginModal">&times;</button>
+          <h2>Login</h2>
+          <form id="loginForm">
+              <input type="email" id="loginEmail" placeholder="Correo Electrónico" required>
+              <input type="password" id="loginPassword" placeholder="Contraseña" required>
+              <button class="modal-login" type="submit">Iniciar Sesión</button>
+          </form>
+      </div>
+    </div>
+
+        <!-- Modal de perfil y reservas -->
+    <div class="modal-overlay" id="profileModalOverlay">
+      <div class="modal">
+          <button class="modal-close" id="closeProfileModal">&times;</button>
+          <h2>Perfil y Reservas</h2>
+          <div id="user-profile-info">
+              <p><strong>Nombre:</strong> <span id="profile-name"></span></p>
+              <p><strong>Email:</strong> <span id="profile-email"></span></p>
+          </div>
+          <h3>Reservaciones</h3>
+          <ul id="reservations-list">
+              <!-- Aquí se mostrarán las reservaciones -->
+          </ul>
+      </div>
+    </div>
+
+      <main>
+        <section class="reservations-section">
+          <h2>Reserva tu Estancia en El Rincón de Camila</h2>
+          <p>Completa el siguiente formulario para hacer una reservación.</p>
+        
+          <!-- Formulario actualizado -->
+          <form id="reservationForm" action="/submit-reservation" method="POST" class="reservation-form-horizontal">
+            <div class="form-group-horizontal">
+              <label for="check-in">Entrada</label>
+              <input type="date" id="check-in" name="check-in" required />
+            </div>
+            <div class="form-group-horizontal">
+              <label for="check-out">Salida</label>
+              <input type="date" id="check-out" name="check-out" required />
+            </div>
+            <div class="form-group-horizontal">
+              <label for="people">Personas</label>
+              <select id="people" name="people" required>
+                <option value="1">1 persona</option>
+                <option value="2">2 personas</option>
+                <option value="3">3 personas</option>
+                <option value="4">4 personas</option>
+                <option value="5">5 personas</option>
+              </select>
+            </div>
+            <div class="form-group-horizontal">
+              <label for="services">Servicios</label>
+              <select id="services" name="services" required>
+                <option value="none">Ninguno</option>
+                <option value="sauna">Sauna</option>
+                <option value="jacuzzi">Jacuzzi</option>
+                <option value="minibar">Minibar</option>
+                <option value="Minibar_y_jacuzzi">Minibar y jacuzzi</option>
+                <option value="Minibar_y_sauna">Minibar y sauna</option>
+              </select>
+            </div>
+
+            <button type="submit" class="search-btn">Buscar</button>
+          </form>
+        </section>
+
+        <div class="results">
+          <h3>Resultados de la Búsqueda</h3>
+          <ul class="cabanas-list">
+            <li class="cabana-item">
+              <img src="https://via.placeholder.com/300x180" alt="Cabaña 1" />
+              <div class="cabana-item-content">
+                <h3>Cabaña 1</h3>
+                <p>Personas: 1</p>
+                <p>Extras: Jacuzzi, Minibar</p>
+                <p class="price">Precio: $400</p>
+                <p><strong>Disponible</strong></p>
+              </div>
+              <button class="btn-reserve">Reservar</button>
+            </li>
+          </ul>
+        </div>
+
+      </main>
+
+      <footer>
+        <p>&copy; 2025 Mi Página Web | Todos los derechos reservados.</p>
+        <p>
+          <a href="/politicas">Política de privacidad</a> |
+          <a href="/terminos">Términos de servicio</a>
+        </p>
+  
+        <!-- <div class="social-icons">
+              <a href="https://www.facebook.com" target="_blank">Facebook</a>
+              <a href="https://www.twitter.com" target="_blank">Twitter</a>
+              <a href="https://www.instagram.com" target="_blank">Instagram</a>
+              Si quieres íconos, podrías usar alguna librería como FontAwesome
+          </div> -->
+      </footer>
 </body>
+<script src="/js/index.js"></script>
 </html>
