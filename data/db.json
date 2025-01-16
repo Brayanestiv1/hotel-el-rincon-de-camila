@@ -17,6 +17,18 @@
       "email": "coreo@gmail.com",
       "password": "password",
       "id": 3
+    },
+    {
+      "name": "brayan",
+      "email": "verabrayandavid@gmail.com",
+      "password": "oigres153246",
+      "id": 4
+    },
+    {
+      "name": "brayanv",
+      "email": "cuentaestudio1504@gmail.com",
+      "password": "oigres153246",
+      "id": 5
     }
   ],
   "cabanas": [
@@ -355,7 +367,7 @@
   ],
   "reserva": [
     {
-      "users_id": "id",
+      "users_id": "1",
       "cabañas": [
         {
           "cabañas_id": "id"

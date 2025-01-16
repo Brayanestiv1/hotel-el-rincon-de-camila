@@ -19,6 +19,7 @@
           <li><a href="vistas/contactos.html">contactos</a></li>
           <li id="login-button"><a href="#">Login</a></li>
           <li id="openModal"><a href="#">registro</a></li>
+          <li id="user-name" class="ocultar"></li>
         </ul>
         <button class="ham" id="menu-btn" type="button">
           <span class="br-1"></span>
@@ -28,7 +29,7 @@
       </nav>
     </header>
 
-     <!-- Modal structure -->
+     <!-- Modal registrar -->
      <div class="modal-overlay" id="modalOverlay">
       <div class="modal">
           <button class="modal-close" id="closeModal">&times;</button>
@@ -38,7 +39,37 @@
               <input type="email" id="email" placeholder="Correo Electrónico" required>
               <input type="password" id="password" placeholder="password" required>
               <button class="modal-register" type="submit">Registrar</button>
+              <li id="user-name" class="ocultar"></li>
           </form>
+      </div>
+    </div>
+
+      <!-- Modal de Login -->
+    <div class="modal-overlay" id="loginModalOverlay">
+      <div class="modal">
+          <button class="modal-close" id="closeLoginModal">&times;</button>
+          <h2>Login</h2>
+          <form id="loginForm">
+              <input type="email" id="loginEmail" placeholder="Correo Electrónico" required>
+              <input type="password" id="loginPassword" placeholder="Contraseña" required>
+              <button class="modal-login" type="submit">Iniciar Sesión</button>
+          </form>
+      </div>
+    </div>
+
+        <!-- Modal de perfil y reservas -->
+    <div class="modal-overlay" id="profileModalOverlay">
+      <div class="modal">
+          <button class="modal-close" id="closeProfileModal">&times;</button>
+          <h2>Perfil y Reservas</h2>
+          <div id="user-profile-info">
+              <p><strong>Nombre:</strong> <span id="profile-name"></span></p>
+              <p><strong>Email:</strong> <span id="profile-email"></span></p>
+          </div>
+          <h3>Reservaciones</h3>
+          <ul id="reservations-list">
+              <!-- Aquí se mostrarán las reservaciones -->
+          </ul>
       </div>
     </div>
 
@@ -197,6 +228,40 @@
             </button>
         </div>
       </div>
+
+        <h2>Areas</h2>
+      <div class="areas_hotel">
+        <div class="area">
+          <img src="img/areas/area1.avif" alt="">
+        </div>
+
+        <div class="area">
+          <img src="img/areas/area2.jpg" alt="">
+        </div>
+
+        <div class="area">
+          <img src="img/areas/area3.jpg" alt="">
+        </div>
+      </div>
+
+      <h2>servicios</h2>
+      <div class="areas_hotel">
+        <div class="area">
+          <img src="img/servicios/ser1.webp" alt="">
+        </div>
+
+        <div class="area">
+          <img src="img/servicios/ser2.jpeg" alt="">
+        </div>
+
+        <div class="area">
+          <img src="img/servicios/ser3.jpeg" alt="">
+        </div>
+      </div>
+
+      <a href="https://wa.me/3165879239" target="_blank" class="whatsapp-button">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </a>
     </main>
 
     <footer>
