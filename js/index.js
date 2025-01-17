@@ -311,30 +311,41 @@ function verificarSesion() {
 
 /*------------------------filtro cabañas----------------------------- */
 
-
 document.getElementById("reservationForm").addEventListener("submit", async function (e) {
   e.preventDefault(); // Prevenir recarga de la página
 
   // Obtener los valores del formulario
   const checkIn = document.getElementById("check-in").value;
   const checkOut = document.getElementById("check-out").value;
-  const people = document.getElementById("people").value;
+  const people = Number(document.getElementById("people").value); // Convertir a número
   const services = document.getElementById("services").value;
 
   try {
     // Hacer la solicitud HTTP GET al API
     const response = await fetch("http://localhost:3000/cabanas"); // Cambiar por la URL real
+    
+    if (!response.ok) {
+      throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+    }
+    
     const data = await response.json();
 
+    // Ajuste si el API devuelve directamente un array en lugar de un objeto con "cabanas"
+    const cabanas = data.cabanas || data;
+
+    if (!Array.isArray(cabanas)) {
+      throw new Error("La estructura de datos del API no es válida.");
+    }
+
     // Filtrar las cabañas según los criterios del cliente
-    const filteredCabanas = data.cabanas.filter((cabana) => {
+    const filteredCabanas = cabanas.filter((cabana) => {
       // Verificar disponibilidad (fecha en null y disponible en true)
       if (cabana.fecha !== null || !cabana.disponible) return false;
 
-      // Filtrar por el número de personas
-      if (cabana.personas < people) return false;
+      // Filtrar por el número exacto de personas
+      if (cabana.personas !== people) return false;
 
-      // Filtrar por servicios seleccionados (si no es "Ninguno")
+      // Filtrar por servicios seleccionados (si no es "none")
       if (services !== "none" && !cabana.extras.includes(services)) return false;
 
       return true;
@@ -344,14 +355,15 @@ document.getElementById("reservationForm").addEventListener("submit", async func
     displayResults(filteredCabanas, checkIn, checkOut);
   } catch (error) {
     console.error("Error al obtener las cabañas:", error);
+    alert("Hubo un problema al obtener la información de las cabañas. Inténtalo nuevamente.");
   }
 });
 
-// Función para mostrar los resultados en la página
+// Función para mostrar los resultados filtrados
 function displayResults(cabanas, checkIn, checkOut) {
   const resultsContainer = document.querySelector(".results .cabanas-list");
   resultsContainer.innerHTML = ""; // Limpiar resultados previos
-
+  
   if (cabanas.length === 0) {
     resultsContainer.innerHTML = "<p>No se encontraron cabañas disponibles.</p>";
     return;
@@ -363,6 +375,7 @@ function displayResults(cabanas, checkIn, checkOut) {
 
     cabanaItem.innerHTML = `
       <h3>Cabaña ${cabana.id}</h3>
+      <img src="${cabana.imagen}" alt="Imagen de la cabaña" class="cabana-image" />
       <p>Precio: $${cabana.precio}</p>
       <p>Personas: ${cabana.personas}</p>
       <p>Extras: ${cabana.extras.join(", ") || "Ninguno"}</p>
@@ -372,3 +385,69 @@ function displayResults(cabanas, checkIn, checkOut) {
     resultsContainer.appendChild(cabanaItem);
   });
 }
+
+
+/*-----------------el api tome las img-------------------- */
+
+// function displayRooms(filteredRooms, checkIn, checkOut, guests) {
+//   const container = document.getElementById('roomContainer');
+//   container.innerHTML = '';
+
+//   filteredRooms.forEach(room => {
+//       const nights = (new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24);
+//       const totalPrice = room.precio * nights; // Cambiado a "precio" según la estructura de tu API
+
+//       const roomElement = document.createElement('div');
+//       roomElement.className = 'room-card bg-gray-100 p-6 rounded shadow-md flex items-start space-x-6';
+//       roomElement.innerHTML = `
+//   <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+//       <!-- Imagen -->
+//       <img 
+//           src="./imag/img${room.id}.jpg" 
+//           alt="Imagen de cabaña ${room.id}" 
+//           class="w-full h-64 object-cover" 
+//           onerror="handleImageError(this)"
+//       >
+      
+//       <!-- Información -->
+//       <div class="p-4 space-y-4">
+//           <!-- Título -->
+//           <h2 class="font-bold text-2xl">Cabaña ${room.id}</h2>
+
+//           <!-- Detalles en grid -->
+//           <div class="grid grid-cols-2 gap-2 text-sm">
+//               <p>Jacuzzi: ${room.extras.includes('jacuzzi') ? 'Sí' : 'No'}</p>
+//               <p>Minibar: ${room.extras.includes('minibar') ? 'Sí' : 'No'}</p>
+//               <p>Capacidad: ${room.personas} Personas</p>
+//               <p>Precio por noche: $${room.precio} USD</p>
+//           </div>
+
+//           <!-- Precio total -->
+//           <div class="text-lg font-semibold">
+//               Precio total: $${totalPrice} USD
+//           </div>
+
+//           <!-- Información adicional -->
+//           <p class="text-sm text-gray-600">
+//               Para ${guests} personas, ${nights} noches (${checkIn} - ${checkOut})
+//           </p>
+
+//           <!-- Botón -->
+//           ${
+//               room.disponible 
+//                   ? `<button 
+//                       class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 w-full"
+//                       onclick="showImportantInfoModal('${room.id}', ${totalPrice})">
+//                       Reservar
+//                   </button>`
+//                   : `<button 
+//                       class="bg-gray-600 text-white px-6 py-2 rounded shadow cursor-not-allowed w-full" 
+//                       disabled>
+//                       Habitación no disponible
+//                   </button>`
+//           }
+//       </div>
+//   </div>`;
+//       container.appendChild(roomElement);
+//   });
+// }

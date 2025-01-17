@@ -42,308 +42,337 @@
       ],
       "disponible": true,
       "fecha": null,
-      "imagen": ""
+      "imagen": "./img/img1.jpg"
     },
     {
       "id": 2,
       "precio": 400,
+      "personas": 1,
       "extras": [
         "jacuzzi",
         "minibar"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img2.jpg"
     },
     {
       "id": 3,
       "precio": 330,
+      "personas": 1,
       "extras": [
         "jacuzzi"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img3.jpg"
     },
     {
       "id": 4,
       "precio": 330,
+      "personas": 1,
       "extras": [
         "jacuzzi"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img4.jpg"
     },
     {
       "id": 5,
       "precio": 350,
+      "personas": 1,
       "extras": [
         "minibar"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img5.jpg"
     },
     {
       "id": 6,
       "precio": 350,
+      "personas": 1,
       "extras": [
         "minibar"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img6.jpg"
     },
     {
       "id": 7,
       "precio": 315,
+      "personas": 1,
       "extras": [
         "sauna"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img7.jpg"
     },
     {
       "id": 8,
       "precio": 315,
+      "personas": 1,
       "extras": [
         "sauna"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img8.jpg"
     },
     {
       "id": 9,
       "precio": 385,
+      "personas": 1,
       "extras": [
         "minibar",
         "sauna"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img9.jpg"
     },
     {
       "id": 10,
       "precio": 385,
+      "personas": 1,
       "extras": [
         "minibar",
         "sauna"
       ],
-      "personas": 1,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img10.jpg"
     },
     {
       "id": 11,
       "precio": 470,
+      "personas": 2,
       "extras": [
         "jacuzzi",
         "minibar"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img1.jpg"
     },
     {
       "id": 12,
       "precio": 470,
+      "personas": 2,
       "extras": [
         "jacuzzi",
         "minibar"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img2.jpg"
     },
     {
       "id": 13,
       "precio": 400,
+      "personas": 2,
       "extras": [
         "jacuzzi"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img3.jpg"
     },
     {
       "id": 14,
       "precio": 400,
+      "personas": 2,
       "extras": [
         "jacuzzi"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img4.jpg"
     },
     {
       "id": 15,
       "precio": 420,
+      "personas": 2,
       "extras": [
         "minibar"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img5.jpg"
     },
     {
       "id": 16,
       "precio": 420,
+      "personas": 2,
       "extras": [
         "minibar"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img6.jpg"
     },
     {
       "id": 17,
       "precio": 385,
+      "personas": 2,
       "extras": [
         "sauna"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img7.jpg"
     },
     {
       "id": 18,
       "precio": 385,
+      "personas": 2,
       "extras": [
         "sauna"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img8.jpg"
     },
     {
       "id": 19,
       "precio": 455,
+      "personas": 2,
       "extras": [
         "minibar",
         "sauna"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img9.jpg"
     },
     {
       "id": 20,
       "precio": 455,
+      "personas": 2,
       "extras": [
         "minibar",
         "sauna"
       ],
-      "personas": 2,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img10.jpg"
     },
     {
       "id": 21,
       "precio": 520,
+      "personas": 3,
       "extras": [
         "jacuzzi",
         "minibar"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img1.jpg"
     },
     {
       "id": 22,
       "precio": 520,
+      "personas": 3,
       "extras": [
         "jacuzzi",
         "minibar"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img2.jpg"
     },
     {
       "id": 23,
       "precio": 450,
+      "personas": 3,
       "extras": [
         "jacuzzi"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img3.jpg"
     },
     {
       "id": 24,
       "precio": 450,
+      "personas": 3,
       "extras": [
         "jacuzzi"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img4.jpg"
     },
     {
       "id": 25,
       "precio": 470,
+      "personas": 3,
       "extras": [
         "minibar"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img5.jpg"
     },
     {
       "id": 26,
       "precio": 470,
+      "personas": 3,
       "extras": [
         "minibar"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img6.jpg"
     },
     {
       "id": 27,
       "precio": 435,
+      "personas": 3,
       "extras": [
         "sauna"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img7.jpg"
     },
     {
       "id": 28,
       "precio": 435,
+      "personas": 3,
       "extras": [
         "sauna"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img8.jpg"
     },
     {
       "id": 29,
       "precio": 505,
+      "personas": 3,
       "extras": [
         "minibar",
         "sauna"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img9.jpg"
     },
     {
       "id": 30,
       "precio": 505,
+      "personas": 3,
       "extras": [
         "minibar",
         "sauna"
       ],
-      "personas": 3,
       "disponible": true,
-      "fecha": null
+      "fecha": null,
+      "imagen": "./img/img10.jpg"
     }
   ],
   "pagos": [

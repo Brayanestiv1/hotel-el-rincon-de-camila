@@ -672,7 +672,7 @@ nav ul li {
   
   .cabana-item {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: #f9f9f9;
     border-radius: 10px;
     overflow: hidden;
