@@ -117,7 +117,7 @@ registrationForm.addEventListener('submit', async (e) => {
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ name, email, password })
+                        body: JSON.stringify({ name, email, password, reservación: null })
                     });
 
                     if (responseRegister.ok) {
@@ -140,7 +140,8 @@ registrationForm.addEventListener('submit', async (e) => {
 });
 
 
-  //----------Modar de login----------// 
+  //----------------------Modar de login----------------------
+
 
 // Obtener elementos del DOM
 const openLoginModal = document.getElementById('login-button'); // Opción para abrir el modal de login
@@ -149,6 +150,26 @@ const closeLoginModal = document.getElementById('closeLoginModal'); // Botón pa
 const loginModalOverlay = document.getElementById('loginModalOverlay'); // Overlay del modal de login
 const loginForm = document.getElementById('loginForm'); // Formulario de login
 const userNameDisplay = document.getElementById('user-name'); // Contenedor para mostrar el nombre del usuario después de login
+const logoutButton = document.createElement('button'); // Botón para cerrar sesión
+
+// Configuración del botón de cerrar sesión
+logoutButton.textContent = 'Cerrar sesión';
+logoutButton.id = 'logout-button';
+logoutButton.style.display = 'none'; // Inicialmente oculto
+logoutButton.addEventListener('click', () => {
+    // Eliminar datos del usuario del localStorage y actualizar la interfaz
+    localStorage.removeItem('user');
+    userNameDisplay.textContent = '';
+    userNameDisplay.classList.add('ocultar');
+    logoutButton.style.display = 'none';
+    openRegisterModal.classList.remove('ocultar');
+    openLoginModal.classList.remove('ocultar');
+    alert('Sesión cerrada exitosamente.');
+});
+
+// Añadir el botón de cerrar sesión al DOM
+userNameDisplay.parentElement.appendChild(logoutButton);
+
 
 // Abrir modal de login
 openLoginModal.addEventListener('click', () => {
@@ -193,18 +214,21 @@ loginForm.addEventListener('submit', async (e) => {
                     const user = users[0]; // Obtener el primer usuario que coincida
                     alert(`Bienvenido, ${user.name || 'usuario'}. Inicio de sesión exitoso.`);
 
+                    // Guardar los datos del usuario en localStorage
+                    localStorage.setItem('user', JSON.stringify(user));
+
                     // Ocultar las opciones de Login y Registro
                     openRegisterModal.classList.add('ocultar');
                     openLoginModal.classList.add('ocultar');
 
-                    // Mostrar el nombre del usuario
+                    // Mostrar el nombre del usuario y el botón de cerrar sesión
                     userNameDisplay.textContent = user.name; // Mostrar el nombre del usuario
                     userNameDisplay.classList.remove('ocultar');
-                    
+                    logoutButton.style.display = 'block';
+
                     // Cerrar el modal de login
                     loginModalOverlay.style.display = 'none';
                     loginForm.reset(); // Limpiar el formulario
-
                 } else {
                     // Usuario no encontrado
                     alert('Usuario o contraseña incorrectos. Verifica tus datos.');
@@ -221,6 +245,23 @@ loginForm.addEventListener('submit', async (e) => {
         alert('Por favor, completa todos los campos.');
     }
 });
+
+// Verificar si hay un usuario guardado en localStorage al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+        const user = JSON.parse(storedUser);
+
+        // Actualizar la interfaz con los datos del usuario
+        userNameDisplay.textContent = user.name;
+        userNameDisplay.classList.remove('ocultar');
+        logoutButton.style.display = 'block';
+        openRegisterModal.classList.add('ocultar');
+        openLoginModal.classList.add('ocultar');
+    }
+});
+
 
 
 /*------------------modal user-name------------------ */
@@ -309,61 +350,17 @@ function verificarSesion() {
 
 
 
+
 /*------------------------filtro cabañas----------------------------- */
 
-document.getElementById("reservationForm").addEventListener("submit", async function (e) {
-  e.preventDefault(); // Prevenir recarga de la página
+//----------------------Formulario de Reservas----------------------
+// Cargar todas las cabañas al cargar la página
 
-  // Obtener los valores del formulario
-  const checkIn = document.getElementById("check-in").value;
-  const checkOut = document.getElementById("check-out").value;
-  const people = Number(document.getElementById("people").value); // Convertir a número
-  const services = document.getElementById("services").value;
-
-  try {
-    // Hacer la solicitud HTTP GET al API
-    const response = await fetch("http://localhost:3000/cabanas"); // Cambiar por la URL real
-    
-    if (!response.ok) {
-      throw new Error(`Error en la respuesta del servidor: ${response.status}`);
-    }
-    
-    const data = await response.json();
-
-    // Ajuste si el API devuelve directamente un array en lugar de un objeto con "cabanas"
-    const cabanas = data.cabanas || data;
-
-    if (!Array.isArray(cabanas)) {
-      throw new Error("La estructura de datos del API no es válida.");
-    }
-
-    // Filtrar las cabañas según los criterios del cliente
-    const filteredCabanas = cabanas.filter((cabana) => {
-      // Verificar disponibilidad (fecha en null y disponible en true)
-      if (cabana.fecha !== null || !cabana.disponible) return false;
-
-      // Filtrar por el número exacto de personas
-      if (cabana.personas !== people) return false;
-
-      // Filtrar por servicios seleccionados (si no es "none")
-      if (services !== "none" && !cabana.extras.includes(services)) return false;
-
-      return true;
-    });
-
-    // Mostrar los resultados
-    displayResults(filteredCabanas, checkIn, checkOut);
-  } catch (error) {
-    console.error("Error al obtener las cabañas:", error);
-    alert("Hubo un problema al obtener la información de las cabañas. Inténtalo nuevamente.");
-  }
-});
-
-// Función para mostrar los resultados filtrados
-function displayResults(cabanas, checkIn, checkOut) {
+// Define displayResults primero
+function displayResults(cabanas) {
   const resultsContainer = document.querySelector(".results .cabanas-list");
-  resultsContainer.innerHTML = ""; // Limpiar resultados previos
-  
+  resultsContainer.innerHTML = "";
+
   if (cabanas.length === 0) {
     resultsContainer.innerHTML = "<p>No se encontraron cabañas disponibles.</p>";
     return;
@@ -372,82 +369,127 @@ function displayResults(cabanas, checkIn, checkOut) {
   cabanas.forEach((cabana) => {
     const cabanaItem = document.createElement("li");
     cabanaItem.classList.add("cabana-item");
-
     cabanaItem.innerHTML = `
       <h3>Cabaña ${cabana.id}</h3>
       <img src="${cabana.imagen}" alt="Imagen de la cabaña" class="cabana-image" />
       <p>Precio: $${cabana.precio}</p>
       <p>Personas: ${cabana.personas}</p>
-      <p>Extras: ${cabana.extras.join(", ") || "Ninguno"}</p>
-      <p><strong>Disponible para las fechas: ${checkIn} - ${checkOut}</strong></p>
+      <p>Extras: ${Array.isArray(cabana.extras) ? cabana.extras.join(", ") : "Ninguno"}</p>
+      <button class="reserve-button" data-id="${cabana.id}">Reservar</button>
     `;
-
     resultsContainer.appendChild(cabanaItem);
   });
 }
 
 
-/*-----------------el api tome las img-------------------- */
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch("http://localhost:3000/cabanas");
+    if (!response.ok) {
+      throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+    }
 
-// function displayRooms(filteredRooms, checkIn, checkOut, guests) {
-//   const container = document.getElementById('roomContainer');
-//   container.innerHTML = '';
+    const data = await response.json();
+    const cabanas = data.cabanas || data; // Ajustar si el API tiene estructura diferente
+    displayResults(cabanas); // Mostrar todas las cabañas al inicio
+  } catch (error) {
+    console.error("Error al cargar todas las cabañas:", error);
+    alert("Hubo un problema al cargar las cabañas. Inténtalo nuevamente.");
+  }
+});
 
-//   filteredRooms.forEach(room => {
-//       const nights = (new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24);
-//       const totalPrice = room.precio * nights; // Cambiado a "precio" según la estructura de tu API
+// Agregar eventos a los botones de reservar
+document.querySelectorAll(".reserve-button").forEach((button) => {
+  button.addEventListener("click", async (e) => {
+    const cabanaId = e.target.getAttribute("data-id"); // Obtener ID de la cabaña
+    const checkIn = document.getElementById("check-in").value; // Fechas del formulario
+    const checkOut = document.getElementById("check-out").value;
 
-//       const roomElement = document.createElement('div');
-//       roomElement.className = 'room-card bg-gray-100 p-6 rounded shadow-md flex items-start space-x-6';
-//       roomElement.innerHTML = `
-//   <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
-//       <!-- Imagen -->
-//       <img 
-//           src="./imag/img${room.id}.jpg" 
-//           alt="Imagen de cabaña ${room.id}" 
-//           class="w-full h-64 object-cover" 
-//           onerror="handleImageError(this)"
-//       >
-      
-//       <!-- Información -->
-//       <div class="p-4 space-y-4">
-//           <!-- Título -->
-//           <h2 class="font-bold text-2xl">Cabaña ${room.id}</h2>
+    try {
+      // Verificar si el usuario está logeado
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("Debes iniciar sesión para hacer una reserva.");
+        return; // Detener ejecución si no está logeado
+      }
 
-//           <!-- Detalles en grid -->
-//           <div class="grid grid-cols-2 gap-2 text-sm">
-//               <p>Jacuzzi: ${room.extras.includes('jacuzzi') ? 'Sí' : 'No'}</p>
-//               <p>Minibar: ${room.extras.includes('minibar') ? 'Sí' : 'No'}</p>
-//               <p>Capacidad: ${room.personas} Personas</p>
-//               <p>Precio por noche: $${room.precio} USD</p>
-//           </div>
+      // Hacer la solicitud GET para obtener los datos actuales de la cabaña
+      const response = await fetch(`http://localhost:3000/cabanas/${cabanaId}`);
+      if (!response.ok) {
+        throw new Error(`Error al verificar la cabaña: ${response.status}`);
+      }
 
-//           <!-- Precio total -->
-//           <div class="text-lg font-semibold">
-//               Precio total: $${totalPrice} USD
-//           </div>
+      const currentCabanaData = await response.json();
 
-//           <!-- Información adicional -->
-//           <p class="text-sm text-gray-600">
-//               Para ${guests} personas, ${nights} noches (${checkIn} - ${checkOut})
-//           </p>
+      // Verificar disponibilidad
+      if (!currentCabanaData.disponible) {
+        alert("Lo sentimos, esta cabaña ya no está disponible.");
+        return; // Detener ejecución si no está disponible
+      }
 
-//           <!-- Botón -->
-//           ${
-//               room.disponible 
-//                   ? `<button 
-//                       class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 w-full"
-//                       onclick="showImportantInfoModal('${room.id}', ${totalPrice})">
-//                       Reservar
-//                   </button>`
-//                   : `<button 
-//                       class="bg-gray-600 text-white px-6 py-2 rounded shadow cursor-not-allowed w-full" 
-//                       disabled>
-//                       Habitación no disponible
-//                   </button>`
-//           }
-//       </div>
-//   </div>`;
-//       container.appendChild(roomElement);
-//   });
-// }
+      // Mantener todos los datos de la cabaña y solo cambiar fecha y disponibilidad
+      const updatedCabanaData = {
+        ...currentCabanaData, // Mantener todos los datos actuales
+        fecha: { checkIn, checkOut }, // Solo cambiar las fechas
+        disponible: false, // Cambiar a no disponible
+      };
+
+      // Realizar la solicitud PATCH para actualizar la cabaña
+      const patchResponse = await fetch(`http://localhost:3000/cabanas/${cabanaId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedCabanaData),
+      });
+
+      if (!patchResponse.ok) {
+        throw new Error("Error al actualizar la cabaña.");
+      }
+
+      // Realizar una segunda solicitud GET para verificar que los datos se hayan actualizado correctamente
+      const verifyResponse = await fetch(`http://localhost:3000/cabanas/${cabanaId}`);
+      if (!verifyResponse.ok) {
+        throw new Error(`Error al verificar la cabaña después de actualizar: ${verifyResponse.status}`);
+      }
+
+      const verifiedCabana = await verifyResponse.json();
+
+      // Verificar que solo los campos "fecha" y "disponible" se hayan actualizado correctamente
+      if (
+        verifiedCabana.fecha.checkIn === checkIn &&
+        verifiedCabana.fecha.checkOut === checkOut &&
+        verifiedCabana.disponible === false
+      ) {
+        // Si todo está correcto, proceder con la reservación del usuario
+        const updatedUser = {
+          ...user, // Mantener datos actuales del usuario
+          reservacion: [...(user.reservacion || []), cabanaId], // Agregar la nueva cabaña a las reservaciones
+        };
+
+        const userResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedUser),
+        });
+
+        if (!userResponse.ok) {
+          throw new Error("Error al actualizar las reservaciones del usuario.");
+        }
+
+        // Actualizar el usuario en localStorage
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        alert("Reservación realizada con éxito.");
+      } else {
+        throw new Error("Hubo un problema al actualizar la cabaña. Los cambios no se aplicaron correctamente.");
+      }
+    } catch (error) {
+      console.error("Error al realizar la reserva:", error);
+      alert("Hubo un problema al realizar la reserva. Inténtalo nuevamente.");
+    }
+  });
+});
+

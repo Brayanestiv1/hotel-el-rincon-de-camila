@@ -19,7 +19,13 @@
             <li><a href="contactos.html">contactos</a></li>
             <li id="login-button"><a href="#">Login</a></li>
             <li id="openModal"><a href="#">registro</a></li>
-            <li id="user-name" class="ocultar"></li>
+            <li id="user-name" class="ocultar">
+              <span id="user-name-text">Nombre del Usuario</span>
+              <ul id="user-dropdown" class="hidden">
+                  <li><a href="/reservaciones" class="dropdown-option">Reservaciones</a></li>
+                  <li><a href="#" id="logout" class="dropdown-option logout">Cerrar sesión</a></li>
+              </ul>
+            </li>
           </ul>
           <button class="ham" id="menu-btn" type="button">
             <span class="br-1"></span>
@@ -79,7 +85,7 @@
           <p>Completa el siguiente formulario para hacer una reservación.</p>
         
           <!-- Formulario actualizado -->
-          <form id="reservationForm" action="/submit-reservation" method="POST" class="reservation-form-horizontal">
+          <form id="reservationForm" action="/submit-reservation" method="get" class="reservation-form-horizontal">
             <div class="form-group-horizontal">
               <label for="check-in">Entrada</label>
               <input type="date" id="check-in" name="check-in" required />
@@ -112,20 +118,23 @@
         </section>
 
         <div class="results">
-          <h3>Resultados de la Búsqueda</h3>
+          <h3>Cabañas disponibles</h3>
           <ul class="cabanas-list">
+            <!-- Aquí se generarán dinámicamente las cabañas -->
+            <!-- Ejemplo de estructura de una cabaña -->
             <li class="cabana-item">
+              <img src="URL_DE_LA_IMAGEN" alt="Imagen de la cabaña" />
               <div class="cabana-item-content">
                 <h3>Cabaña 1</h3>
-                <p>Personas: 1</p>
-                <p>Extras: Jacuzzi, Minibar</p>
-                <p class="price">Precio: $400</p>
-                <p><strong>Disponible</strong></p>
+                <p class="price">Precio: $200</p>
+                <p>Capacidad: 4 personas</p>
+                <p>Extras: Piscina, Wi-Fi</p>
+                <button class="btn-reserve" data-cabana-id="1">Reservar</button>
               </div>
-              <button class="btn-reserve">Reservar</button>
             </li>
           </ul>
         </div>
+        
 
       </main>
 

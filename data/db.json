@@ -7,28 +7,11 @@
       "id": 1
     },
     {
-      "name": "felice",
-      "email": "verabrayandavid@gmail.com",
+      "name": "pedro",
+      "email": "pedro@gmail.com",
       "password": "oigres153246",
+      "reservación": null,
       "id": 2
-    },
-    {
-      "name": "juan",
-      "email": "coreo@gmail.com",
-      "password": "password",
-      "id": 3
-    },
-    {
-      "name": "brayan",
-      "email": "verabrayandavid@gmail.com",
-      "password": "oigres153246",
-      "id": 4
-    },
-    {
-      "name": "brayanv",
-      "email": "cuentaestudio1504@gmail.com",
-      "password": "oigres153246",
-      "id": 5
     }
   ],
   "cabanas": [
