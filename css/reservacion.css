@@ -31,7 +31,6 @@ main {
     display: block; /* Asegura que actúe como un contenedor normal */
     margin: 0 auto; /* Centra el contenido si es necesario */
     padding-bottom: 100px; /* Espacio para evitar que se solape con el footer */
-
 }
 
 .logo{
@@ -53,20 +52,6 @@ h2 {
     display: none;
 }
 
-
-
-.areas_hotel {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.area img {
-    height: 320px;
-    width: 320px;
-    border-radius: 15px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 5);
-    transition: .3s ease-in-out;
-}
 
 /*menu hamburguesa*/
 
@@ -164,118 +149,6 @@ footer .social-icons a:hover {
     transform: scale(1.2);
 }
 
-.carousel {
-    width: 100%;
-    margin: 0 0;
-}
-
-.carrusel {
-    width: 275px;
-}
-
-.carrusel a img {
-    width: 250px;
-}
-
-.carrusel-arrow {
-    border-radius: 30px;
-    background-color: #ffff;
-    position: absolute;
-    z-index: 4;
-    width: 48px;
-    height: 48px;
-    text-align: center;
-    border: 0;
-    cursor: pointer;
-}
-
-.carrusel-arrow:focus {
-    outline: 0;
-}
-
-.carrusel-arrow svg {
-    width: 12px;
-    height: 100%;
-    color: rgba(0, 0, 0, 7);
-}
-
-.carrusel-prev {
-    left: 0;
-}
-
-.carrusel-next {
-    right: 0;
-    
-}
-
-/*-------------------------------------carrusel-----------------------------------------*/
-
-
-
-.carousel h2 {
-    font-size: 45px;
-    line-height: 38px;
-    padding-bottom: 50px;
-    opacity: .9;
-    text-transform: uppercase;
-    font-weight: 6000;
-    text-align: center;
-    color: #ffff;
-}
-
-.carrusel-list {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    height: 304px;
-    padding: 10px 0;
-    margin: 0 auto;
-    max-width: 90vw;
-    overflow: hidden;
-}
-
-.carrusel-track {
-    position: relative;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    transition: .5s ease-in-out;
-}
-
-.carrusel {
-    position: relative;
-    width: 210px;
-    padding: 0 18px;
-    float: left;
-    box-sizing: border-box;
-    display: flex;
-    height: 100%;
-}
-
-.carrusel h4 {
-    position: absolute;
-    z-index: 1;
-    font-size: 22px;
-    line-height: 23px;
-    color: #ffff;
-    padding: 15px;
-}
-
-.carrusel h4 small {
-    font-size: 15px;
-    display: block;
-}
-
-.carrusel a img {
-    object-fit: cover;
-    height: 300px;
-    width: 200px;
-    border-radius: 15px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 5);
-    transition: .3s ease-in-out;
-}
 
 /*-----------------------modal registro-----------------*/
 
@@ -511,6 +384,192 @@ nav ul li {
 }
 
 
+  /*------------------------------Estilo para el formulario de reservaciones-------------------------------*/
+
+  .reservations-section {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+  }
+  
+  .reservations-section h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .reservations-section p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo del formulario horizontal */
+  .reservation-form-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .form-group-horizontal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .form-group-horizontal label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .form-group-horizontal input,
+  .form-group-horizontal select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 200px;
+  }
+  
+  .form-group-horizontal input:focus,
+  .form-group-horizontal select:focus {
+    outline: none;
+    border-color: #ff4500;
+  }
+  
+  /* Botón de búsqueda */
+  .search-btn {
+    background-color: #ff4500;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-btn:hover {
+    background-color: #ff7300;
+  }
+
+/* -----------estilo resultados----------*/
+
+.results {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    max-width: 90vw;
+    width: 75vw;
+    margin: 30px auto;
+  }
+  
+  .results h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .cabanas-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+  
+  .cabana-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .cabana-item img {
+    width: 40%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .cabana-item-content {
+    padding: 15px;
+  }
+  
+  .cabana-item-content h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 10px;
+  }
+  
+  .cabana-item-content p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .cabana-item-content p strong {
+    color: #ff4500;
+  }
+  
+  .cabana-item-content .price {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  .cabana-item .btn-reserve {
+    background-color: #ff4500;
+    color: white;
+    text-align: center;
+    padding: 0px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cabana-item .btn-reserve:hover {
+    background-color: #ff7300;
+  }
+
+  /* Ajustar el botón reservar para integrarlo al diseño existente */
+.btn-reserve {
+    background-color: #ff4500;
+    color: white;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    display: block;
+    text-decoration: none;
+  }
+  
+  .btn-reserve:hover {
+    background-color: #ff7300;
+  }
+  
+
 /*----------------- DISPOSITIVOS MOVILES -------------------*/
 @media (max-width: 768px){
 
@@ -520,18 +579,6 @@ nav ul li {
         padding-bottom: 20px; /* Espacio para evitar que se solape con el footer */
     }
 
-    .areas_hotel {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        
-    }
-    
-    .area img {
-        height: 300px;
-        width: 300px;
-        margin: 15px;
-    }
 
     .logo{
         padding-left: 25px;
@@ -605,4 +652,25 @@ nav ul li {
     display: flex; /* Mostrar menú al activarlo */
 }
 
+/*--------------------------- Estilos para la sección de reservas --------------------------------*/
+
+.reservation-form-horizontal {
+    flex-direction: column; /* Cambia de horizontal a vertical */
+    gap: 20px; /* Espaciado mayor entre los elementos */
+  }
+
+  .form-group-horizontal {
+    width: 70%; /* Asegura que los campos ocupen todo el ancho */
+    align-items: center; /* Centra los elementos */
+  }
+
+  .form-group-horizontal input,
+  .form-group-horizontal select {
+    width: 90%; /* Reduce el ancho para pantallas pequeñas */
+  }
+
+  .search-btn {
+    width: 90%; /* Botón ocupa casi todo el ancho */
+  }
 }
+
