@@ -1,3 +1,17 @@
+const API_URL = 'https://localhost:3000'; // URL de tu JSON Server
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetch(`${API_URL}/productos`) // Reemplaza 'productos' con tu endpoint
+    .then(response => response.json())
+    .then(data => {
+      console.log('Datos obtenidos:', data);
+      // Aquí renderizas tus datos en la página
+    })
+    .catch(error => console.error('Error al obtener los datos:', error));
+});
+
+
+
 /*Menu hamburguesa */
 
 // Selección de elementos
