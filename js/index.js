@@ -1,5 +1,3 @@
-
-
 /*Menu hamburguesa */
 
 // Selección de elementos
