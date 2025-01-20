@@ -96,7 +96,7 @@ registrationForm.addEventListener('submit', async (e) => {
     if (name && email && password) {
         try {
             // First check if email already exists
-            const responseEmailCheck = await fetch(`http://localhost:3000/users?email=${email}`);
+            const responseEmailCheck = await fetch(`https://json-server-vjur.onrender.com/users?email=${email}`);
             const emailData = await responseEmailCheck.json();
 
             if (emailData.length > 0) {
@@ -104,7 +104,7 @@ registrationForm.addEventListener('submit', async (e) => {
                 alert('El correo electrónico ya está registrado. Por favor, ingresa otro correo.');
             } else {
                 // If email is not taken, check if name is available
-                const responseNameCheck = await fetch(`http://localhost:3000/users?name=${name}`);
+                const responseNameCheck = await fetch(`https://json-server-vjur.onrender.com/users?name=${name}`);
                 const nameData = await responseNameCheck.json();
 
                 if (nameData.length > 0) {
@@ -112,7 +112,7 @@ registrationForm.addEventListener('submit', async (e) => {
                     alert('El nombre de usuario ya está registrado. Por favor, ingresa otro nombre.');
                 } else {
                     // If both email and name are available, proceed to register
-                    const responseRegister = await fetch('http://localhost:3000/users', {
+                    const responseRegister = await fetch('https://json-server-vjur.onrender.com/users', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -204,7 +204,7 @@ loginForm.addEventListener('submit', async (e) => {
     if (email && password) {
         try {
             // Realizar una petición GET al servidor con los datos del usuario
-            const response = await fetch(`http://localhost:3000/users?email=${email}&password=${password}`);
+            const response = await fetch(`https://json-server-vjur.onrender.com/users?email=${email}&password=${password}`);
 
             if (response.ok) {
                 const users = await response.json(); // Parsear la respuesta JSON
@@ -287,7 +287,7 @@ if (userNameElement) {
 
         try {
             // Obtener los detalles del perfil del usuario desde la API
-            const userResponse = await fetch(`http://localhost:3000/users/${userId}`);
+            const userResponse = await fetch(`https://json-server-vjur.onrender.com/users/${userId}`);
             if (userResponse.ok) {
                 const user = await userResponse.json();
                 // Actualizar los campos del perfil en el modal
@@ -295,7 +295,7 @@ if (userNameElement) {
                 profileEmail.textContent = user.email;
 
                 // Llamar a la API para obtener las reservaciones del usuario
-                const reservationsResponse = await fetch(`http://localhost:3000/reservations?userId=${userId}`);
+                const reservationsResponse = await fetch(`https://json-server-vjur.onrender.com/reservations?userId=${userId}`);
                 if (reservationsResponse.ok) {
                     const reservations = await reservationsResponse.json();
                     // Limpiar la lista de reservas
@@ -367,7 +367,7 @@ document.getElementById("reservationForm").addEventListener("submit", async func
 
   try {
     // Hacer la solicitud HTTP GET al API
-    const response = await fetch("http://localhost:3000/cabanas"); // Cambiar por la URL real
+    const response = await fetch("https://json-server-vjur.onrender.com/cabanas"); // Cambiar por la URL real
     
     if (!response.ok) {
       throw new Error(`Error en la respuesta del servidor: ${response.status}`);
