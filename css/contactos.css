@@ -508,7 +508,7 @@ nav ul li {
     main {
         flex: 1;
         margin: 0; /* Centra el contenido si es necesario */
-        padding-bottom: 20px; /* Espacio para evitar que se solape con el footer */
+        padding-bottom: 100px; /* Espacio para evitar que se solape con el footer */
     }
 
     .logo{
