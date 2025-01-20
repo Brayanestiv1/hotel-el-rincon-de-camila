@@ -15,7 +15,7 @@ html {
 body {
     line-height: 1.6;
     font-family: 'Noto Sans JP', sans-serif;
-    background: url('../img/fondo.jpg') no-repeat center center fixed;
+    background: url('/img/fondo.jpg') no-repeat center center fixed;
     padding: 0;
     margin: 0;
     background-size: cover;
