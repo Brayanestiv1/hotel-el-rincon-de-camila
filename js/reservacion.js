@@ -356,176 +356,79 @@ function verificarSesion() {
 
 /*------------------------filtro cabañas----------------------------- */
 
-//----------------------Formulario de Reservas----------------------
-// Cargar todas las cabañas al cargar la página
 
-// Define displayResults primero
-function displayResults(cabanas) {
-    const resultsContainer = document.querySelector(".results .cabanas-list");
-    resultsContainer.innerHTML = "";
-  
-    if (cabanas.length === 0) {
-      resultsContainer.innerHTML = "<p>No se encontraron cabañas disponibles.</p>";
-      return;
+
+document.getElementById("reservationForm").addEventListener("submit", async function (e) {
+  e.preventDefault(); // Prevenir recarga de la página
+
+  // Obtener los valores del formulario
+  const checkIn = document.getElementById("check-in").value;
+  const checkOut = document.getElementById("check-out").value;
+  const people = Number(document.getElementById("people").value); // Convertir a número
+  const services = document.getElementById("services").value;
+
+  try {
+    // Hacer la solicitud HTTP GET al API
+    const response = await fetch("https://json-server-vjur.onrender.com/cabanas"); // Cambiar por la URL real
+    
+    if (!response.ok) {
+      throw new Error(`Error en la respuesta del servidor: ${response.status}`);
     }
-  
-    cabanas.forEach((cabana) => {
-      const cabanaItem = document.createElement("li");
-      cabanaItem.classList.add("cabana-item");
-      cabanaItem.innerHTML = `
-        <h3>Cabaña ${cabana.id}</h3>
-        <img src="${cabana.imagen}" alt="Imagen de la cabaña" class="cabana-image" />
-        <p>Precio: $${cabana.precio}</p>
-        <p>Personas: ${cabana.personas}</p>
-        <p>Extras: ${Array.isArray(cabana.extras) ? cabana.extras.join(", ") : "Ninguno"}</p>
-        <button class="reserve-button" data-id="${cabana.id}">Reservar</button>
-      `;
-      resultsContainer.appendChild(cabanaItem);
+    
+    const data = await response.json();
+
+    // Ajuste si el API devuelve directamente un array en lugar de un objeto con "cabanas"
+    const cabanas = data.cabanas || data;
+
+    if (!Array.isArray(cabanas)) {
+      throw new Error("La estructura de datos del API no es válida.");
+    }
+
+    // Filtrar las cabañas según los criterios del cliente
+    const filteredCabanas = cabanas.filter((cabana) => {
+      // Verificar disponibilidad (fecha en null y disponible en true)
+      if (cabana.fecha !== null || !cabana.disponible) return false;
+
+      // Filtrar por el número exacto de personas
+      if (cabana.personas !== people) return false;
+
+      // Filtrar por servicios seleccionados (si no es "none")
+      if (services !== "none" && !cabana.extras.includes(services)) return false;
+
+      return true;
     });
+
+    // Mostrar los resultados
+    displayResults(filteredCabanas, checkIn, checkOut);
+  } catch (error) {
+    console.error("Error al obtener las cabañas:", error);
+    alert("Hubo un problema al obtener la información de las cabañas. Inténtalo nuevamente.");
   }
+});
+
+// Función para mostrar los resultados filtrados
+function displayResults(cabanas, checkIn, checkOut) {
+  const resultsContainer = document.querySelector(".results .cabanas-list");
+  resultsContainer.innerHTML = ""; // Limpiar resultados previos
   
-  // Función para obtener todas las cabañas al cargar la página
-  async function loadAllCabanas() {
-    try {
-      const response = await fetch("https://json-server-vjur.onrender.com/cabanas");
-      if (!response.ok) {
-        throw new Error(`Error en la respuesta del servidor: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      const cabanas = data.cabanas || data; // Ajustar si el API tiene estructura diferente
-      displayResults(cabanas); // Mostrar todas las cabañas al inicio
-    } catch (error) {
-      console.error("Error al cargar todas las cabañas:", error);
-      alert("Hubo un problema al cargar las cabañas. Inténtalo nuevamente.");
-    }
+  if (cabanas.length === 0) {
+    resultsContainer.innerHTML = "<p>No se encontraron cabañas disponibles.</p>";
+    return;
   }
-  
-  // Función para realizar la búsqueda y filtrado de cabañas
-  async function searchCabanas() {
-    const checkIn = document.getElementById("check-in").value;
-    const checkOut = document.getElementById("check-out").value;
-    const personas = document.getElementById("personas").value;
-  
-    try {
-      // Realizamos la petición GET para obtener las cabañas filtradas
-      const response = await fetch(`https://json-server-vjur.onrender.com/cabanas?checkIn=${checkIn}&checkOut=${checkOut}&personas=${personas}`);
-      
-      if (!response.ok) {
-        throw new Error(`Error al buscar las cabañas: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      const cabanas = data.cabanas || data; // Ajustar si el API tiene estructura diferente
-      displayResults(cabanas); // Mostrar las cabañas filtradas
-    } catch (error) {
-      console.error("Error al buscar las cabañas:", error);
-      alert("Hubo un problema al filtrar las cabañas. Inténtalo nuevamente.");
-    }
-  }
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    // Cargar todas las cabañas cuando se carga la página
-    loadAllCabanas(); 
+
+  cabanas.forEach((cabana) => {
+    const cabanaItem = document.createElement("li");
+    cabanaItem.classList.add("cabana-item");
+
+    cabanaItem.innerHTML = `
+      <h3>Cabaña ${cabana.id}</h3>
+      <img src="${cabana.imagen}" alt="Imagen de la cabaña" class="cabana-image" />
+      <p>Precio: $${cabana.precio}</p>
+      <p>Personas: ${cabana.personas}</p>
+      <p>Extras: ${cabana.extras.join(", ") || "Ninguno"}</p>
+      <p><strong>Disponible para las fechas: ${checkIn} - ${checkOut}</strong></p>
+    `;
+
+    resultsContainer.appendChild(cabanaItem);
   });
-  
-  // Agregar eventos a los botones de reservar
-  document.addEventListener("click", async (e) => {
-    if (e.target.classList.contains("reserve-button")) {
-      const cabanaId = e.target.getAttribute("data-id"); // Obtener ID de la cabaña
-      const checkIn = document.getElementById("check-in").value; // Fechas del formulario
-      const checkOut = document.getElementById("check-out").value;
-  
-      // Verificar si el usuario está logeado
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        alert("Debes iniciar sesión para hacer una reserva.");
-        return; // Detener ejecución si no está logeado
-      }
-  
-      try {
-        // Hacer la solicitud GET para obtener los datos actuales de la cabaña
-        const response = await fetch(`https://json-server-vjur.onrender.com/cabanas/${cabanaId}`);
-        if (!response.ok) {
-          throw new Error(`Error al verificar la cabaña: ${response.status}`);
-        }
-  
-        const currentCabanaData = await response.json();
-  
-        // Verificar disponibilidad
-        if (!currentCabanaData.disponible || currentCabanaData.fecha !== null) {
-          alert("Lo sentimos, esta cabaña ya está reservada o no está disponible.");
-          return; // Detener ejecución si no está disponible
-        }
-  
-        // Mantener todos los datos de la cabaña y solo cambiar fecha y disponibilidad
-        const updatedCabanaData = {
-          ...currentCabanaData, // Mantener todos los datos actuales
-          fecha: { checkIn, checkOut }, // Solo cambiar las fechas
-          disponible: false, // Cambiar a no disponible
-        };
-  
-        // Realizar la solicitud PATCH para actualizar la cabaña
-        const patchResponse = await fetch(`https://json-server-vjur.onrender.com/cabanas/${cabanaId}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedCabanaData),
-        });
-  
-        if (!patchResponse.ok) {
-          throw new Error("Error al actualizar la cabaña.");
-        }
-  
-        // Realizar una segunda solicitud GET para verificar que los datos se hayan actualizado correctamente
-        const verifyResponse = await fetch(`https://json-server-vjur.onrender.com/cabanas/${cabanaId}`);
-        if (!verifyResponse.ok) {
-          throw new Error(`Error al verificar la cabaña después de actualizar: ${verifyResponse.status}`);
-        }
-  
-        const verifiedCabana = await verifyResponse.json();
-  
-        // Verificar que solo los campos "fecha" y "disponible" se hayan actualizado correctamente
-        if (
-          verifiedCabana.fecha.checkIn === checkIn &&
-          verifiedCabana.fecha.checkOut === checkOut &&
-          verifiedCabana.disponible === false
-        ) {
-          // Si todo está correcto, proceder con la reservación del usuario
-          const updatedUser = {
-            ...user, // Mantener datos actuales del usuario
-            reservacion: [...(user.reservacion || []), cabanaId], // Agregar la nueva cabaña a las reservaciones
-          };
-  
-          const userResponse = await fetch(`https://json-server-vjur.onrender.com/users/${user.id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedUser),
-          });
-  
-          if (!userResponse.ok) {
-            throw new Error("Error al actualizar las reservaciones del usuario.");
-          }
-  
-          // Actualizar el usuario en localStorage
-          localStorage.setItem("user", JSON.stringify(updatedUser));
-  
-          alert("Reservación realizada con éxito.");
-        } else {
-          throw new Error("Hubo un problema al actualizar la cabaña. Los cambios no se aplicaron correctamente.");
-        }
-      } catch (error) {
-        console.error("Error al realizar la reserva:", error);
-        alert("Hubo un problema al realizar la reserva. Inténtalo nuevamente.");
-      }
-    }
-  });
-  
-  // Evento para el botón de búsqueda
-  document.getElementById("search-button").addEventListener("click", (e) => {
-    e.preventDefault(); // Prevenir la recarga de la página
-    searchCabanas(); // Realizar la búsqueda
-  });
+}
