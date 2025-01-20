@@ -19,7 +19,7 @@ menu.addEventListener('click', (e) => {
 });
 
 
-/*Carrusel*/
+/*--------------------Carrusel--------------------------*/
 function App () {}
 
   window.onload = function(event) {
