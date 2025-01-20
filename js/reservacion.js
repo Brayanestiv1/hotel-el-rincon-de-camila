@@ -356,6 +356,7 @@ function verificarSesion() {
 
 /*------------------------filtro cabañas----------------------------- */
 
+//----------------------Formulario de Reservas----------------------
 // Cargar todas las cabañas al cargar la página
 
 // Define displayResults primero
