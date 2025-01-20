@@ -387,7 +387,7 @@ function displayResults(cabanas) {
   // Función para obtener todas las cabañas al cargar la página
   async function loadAllCabanas() {
     try {
-      const response = await fetch("http://localhost:3000/cabanas");
+      const response = await fetch("https://json-server-vjur.onrender.com/cabanas");
       if (!response.ok) {
         throw new Error(`Error en la respuesta del servidor: ${response.status}`);
       }
@@ -409,7 +409,7 @@ function displayResults(cabanas) {
   
     try {
       // Realizamos la petición GET para obtener las cabañas filtradas
-      const response = await fetch(`http://localhost:3000/cabanas?checkIn=${checkIn}&checkOut=${checkOut}&personas=${personas}`);
+      const response = await fetch(`https://json-server-vjur.onrender.com/cabanas?checkIn=${checkIn}&checkOut=${checkOut}&personas=${personas}`);
       
       if (!response.ok) {
         throw new Error(`Error al buscar las cabañas: ${response.status}`);
@@ -445,7 +445,7 @@ function displayResults(cabanas) {
   
       try {
         // Hacer la solicitud GET para obtener los datos actuales de la cabaña
-        const response = await fetch(`http://localhost:3000/cabanas/${cabanaId}`);
+        const response = await fetch(`https://json-server-vjur.onrender.com/cabanas/${cabanaId}`);
         if (!response.ok) {
           throw new Error(`Error al verificar la cabaña: ${response.status}`);
         }
@@ -466,7 +466,7 @@ function displayResults(cabanas) {
         };
   
         // Realizar la solicitud PATCH para actualizar la cabaña
-        const patchResponse = await fetch(`http://localhost:3000/cabanas/${cabanaId}`, {
+        const patchResponse = await fetch(`https://json-server-vjur.onrender.com/cabanas/${cabanaId}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -479,7 +479,7 @@ function displayResults(cabanas) {
         }
   
         // Realizar una segunda solicitud GET para verificar que los datos se hayan actualizado correctamente
-        const verifyResponse = await fetch(`http://localhost:3000/cabanas/${cabanaId}`);
+        const verifyResponse = await fetch(`https://json-server-vjur.onrender.com/cabanas/${cabanaId}`);
         if (!verifyResponse.ok) {
           throw new Error(`Error al verificar la cabaña después de actualizar: ${verifyResponse.status}`);
         }
@@ -498,7 +498,7 @@ function displayResults(cabanas) {
             reservacion: [...(user.reservacion || []), cabanaId], // Agregar la nueva cabaña a las reservaciones
           };
   
-          const userResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
+          const userResponse = await fetch(`https://json-server-vjur.onrender.com/users/${user.id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
